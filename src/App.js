@@ -1,9 +1,10 @@
-import React, { Suspense, useEffect } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import React, { Suspense, useEffect, useState } from 'react'
+import { HashRouter, Route, Routes, useNavigate, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
+import Dashboard from './views/dashboard/Dashboard'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -15,6 +16,8 @@ const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
 const App = () => {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+ console.log(" thid is token",token);
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
   const storedTheme = useSelector((state) => state.theme)
 
@@ -43,10 +46,13 @@ const App = () => {
       >
         <Routes>
           <Route exact path="/login" name="Login Page" element={<Login />} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
           <Route exact path="/register" name="Register Page" element={<Register />} />
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
+          {/* <Route path="*" name="Home" element={token && <Navigate replace to="/dashboard" />} /> */}
           <Route path="*" name="Home" element={<DefaultLayout />} />
+
         </Routes>
       </Suspense>
     </HashRouter>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef , useState} from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -18,6 +18,7 @@ import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 const WidgetsDropdown = (props) => {
   const widgetChartRef1 = useRef(null)
   const widgetChartRef2 = useRef(null)
+  const [countk, setCountk] = useState(props.count)
 
   useEffect(() => {
     document.documentElement.addEventListener('ColorSchemeChange', () => {
@@ -44,7 +45,7 @@ const WidgetsDropdown = (props) => {
           color="primary"
           value={
             <>
-              26K{' '}
+              {props.count}{' '}
               <span className="fs-6 fw-normal">
                 (-12.4% <CIcon icon={cilArrowBottom} />)
               </span>
